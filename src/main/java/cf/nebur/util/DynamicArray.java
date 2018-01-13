@@ -79,7 +79,7 @@ public class DynamicArray<T> extends Collection<T> {
      * Adds item to the end of the array
      *
      * <ul>
-     *     <li>Time complexity: O(1) (amoritized)</li>
+     *     <li>Time complexity: O(1) (amortized)</li>
      *     <li>Mutates structure: Yes</li>
      * </ul>
      *
