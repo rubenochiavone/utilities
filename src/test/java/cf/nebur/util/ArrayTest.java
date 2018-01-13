@@ -12,6 +12,18 @@ public class ArrayTest extends TestCase {
         Array<Integer> integerArray = new Array<>();
 
         assertEquals(0, integerArray.size());
+
+        integerArray = new Array<>(10);
+
+        assertEquals(10, integerArray.size());
+
+        integerArray = new Array<>(100);
+
+        assertEquals(100, integerArray.size());
+
+        integerArray = new Array<>(-1);
+
+        assertEquals(0, integerArray.size());
     }
 
     @Test
@@ -121,7 +133,21 @@ public class ArrayTest extends TestCase {
 
     @Test
     public void testIntegerArrayGet() {
-        Array<Integer> integerArray = new Array<>();
+        Array<Integer> integerArray = new Array<>(10);
+
+        for (int i = 0; i < integerArray.size(); i++) {
+            assertNull(integerArray.get(0));
+        }
+
+        for (int i = 0; i < integerArray.size(); i++) {
+            integerArray.set(i, i);
+        }
+
+        for (int i = 0; i < integerArray.size(); i++) {
+            assertEquals(i, integerArray.get(i).intValue());
+        }
+
+        integerArray = new Array<>();
 
         assertEquals(0, integerArray.size());
 
@@ -150,6 +176,61 @@ public class ArrayTest extends TestCase {
 
         for (int i = 0; i < n; i++) {
             assertEquals(i, integerArray.get(i).intValue());
+        }
+    }
+
+    @Test
+    public void testStringArraySet() {
+        String aVeryLongString = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+        String[] words = aVeryLongString.split(" ");
+        int length = words.length;
+
+        Array<String> stringArray = new Array<>(length);
+
+        assertEquals(length, stringArray.size());
+
+        for (int i = 0; i < length; i++) {
+            try {
+                stringArray.set(words[i], i);
+            } catch (IndexOutOfBoundsException e) {
+                fail(e.getMessage());
+            }
+        }
+
+        for (int i = 0; i < length; i++) {
+            try {
+                assertEquals(words[i], stringArray.get(i));
+            } catch (IndexOutOfBoundsException e) {
+                fail(e.getMessage());
+            }
+        }
+    }
+
+    @Test
+    public void testStringArraySetOutOfBounds() {
+        String aVeryLongString = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+        String[] words = aVeryLongString.split(" ");
+        int length = words.length;
+
+        Array<String> stringArray = new Array<>(length);
+
+        assertEquals(length, stringArray.size());
+
+        for (int i = 0; i < length; i++) {
+            try {
+                stringArray.set(words[i], i);
+            } catch (IndexOutOfBoundsException e) {
+                fail(e.getMessage());
+            }
+        }
+
+        try {
+            stringArray.set(words[0], length);
+            fail("Should have thrown an exception");
+        } catch (IndexOutOfBoundsException e) {
+            assertNotNull(e);
+            assertNotNull(e.getMessage());
+            assertFalse(e.getMessage().isEmpty());
         }
     }
 }
