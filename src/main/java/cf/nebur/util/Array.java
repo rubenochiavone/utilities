@@ -1,15 +1,51 @@
 package cf.nebur.util;
 
-import java.lang.reflect.ParameterizedType;
-
+/**
+ * A random-access data structure that is of fixed size.
+ *
+ * <p>
+ *     "Adding" or "deleting" an element from an array
+ *     requires creating an appropriately sized contiguous
+ *     chunk of memory, and copying the elements that you
+ *     want to keep into the new array.
+ * </p>
+ *
+ * <p>
+ *     <h2>Strengths</h2>
+ *     <ul>
+ *         <li>The item lookup by index for arrays is very quick - O(1).</li>
+ *         <li>Arrays are a simple data structure with a very low memory footprint.</li>
+ *     </ul>
+ *
+ *     <h2>Weaknesses</h2>
+ *     <ul>
+ *         <li>Arrays have to be implemented in contiguous memory.</li>
+ *         <li>Adding or deleting elements to the array is O(n), where
+ *         n is the number of elements in the array.</li>
+ *         <li>Arrays do not allow for the quick rearrangement of elements.</li>
+ *         <li>Searching in the array for an entry with particular attributes is O(n).</li>
+ *     </ul>
+ * </p>
+ *
+ * @param <T>
+ * @author Ruben O. Chiavone
+ * @see https://codefights.com/interview-practice/topics/arrays/tutorial
+ */
 public class Array<T> extends Collection<T> {
 
     private T[] data;
     private int size;
 
     public Array() {
-        data = (T[]) new Object[0];
-        size = 0;
+        this(0);
+    }
+
+    public Array(int size) {
+        if (size < 0) {
+            size = 0;
+        }
+        data = (T[]) new Object[size];
+        this.size = size;
     }
 
     /**
@@ -75,6 +111,24 @@ public class Array<T> extends Collection<T> {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + size);
         }
         return data[index];
+    }
+
+    /**
+     * Set an element at index
+     *
+     * <ul>
+     *     <li>Time complexity: O(1)</li>
+     *     <li>Mutates structure: No</li>
+     * </ul>
+     *
+     * @param item
+     */
+    @Override
+    public void set(T item, int index) {
+        if (index > size - 1) {
+            throw new IndexOutOfBoundsException("index " + index + " but size is " + size);
+        }
+        data[index] = item;
     }
 
     @Override
