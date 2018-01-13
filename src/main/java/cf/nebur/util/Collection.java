@@ -18,15 +18,6 @@ public abstract class Collection<T> {
     }
 
     /**
-     * Adds {@code item} to this collection on specified index
-     *
-     * @param item
-     */
-    public void append(T item, int index) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Removes the item referenced by {@code index} of this collection
      *
      * @param index
@@ -56,12 +47,46 @@ public abstract class Collection<T> {
     }
 
     /**
-     * Check if exists an item with the value of {@code item}
+     * Set {@code item} to this collection on specified {@code index}
+     *
+     * @param item
+     * @param index
+     */
+    public void set(T item, int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Check if exists an item with the value of {@code item} on this collection
      *
      * @param item
      * @return {@code true} if exists and {@code false} otherwise
      */
-    public boolean contains(T item) {
+    public final boolean contains(T item) {
+        return indexOf(item) != -1;
+    }
+
+    /**
+     * Return the index of the item with the value of {@code item} otherwise
+     * return {@code -1}
+     *
+     * @param item
+     * @return the index of the item with the value of {@code item} otherwise
+     * return {@code -1}
+     */
+    public final int indexOf(T item) {
+        return find(item);
+    }
+
+    /**
+     * Return the index of the item with the value of {@code item} otherwise
+     * return {@code -1}
+     *
+     * @param item
+     * @return the index of the item with the value of {@code item} otherwise
+     * return {@code -1}
+     */
+    public int find(T item) {
         throw new UnsupportedOperationException();
     }
 
