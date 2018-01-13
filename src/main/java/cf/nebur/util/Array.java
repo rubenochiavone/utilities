@@ -36,7 +36,6 @@ import java.util.Iterator;
 public class Array<T> extends Collection<T> {
 
     private T[] data;
-    private int size;
 
     public Array() {
         this(0);
@@ -47,7 +46,6 @@ public class Array<T> extends Collection<T> {
             size = 0;
         }
         data = (T[]) new Object[size];
-        this.size = size;
     }
 
     /**
@@ -62,12 +60,11 @@ public class Array<T> extends Collection<T> {
      */
     @Override
     public void append(T item) {
-        T[] tmp = (T[]) new Object[size + 1];
-        System.arraycopy(data, 0, tmp, 0, size);
-        size++;
+        T[] tmp = (T[]) new Object[data.length + 1];
+        System.arraycopy(data, 0, tmp, 0, data.length);
         data = null;
         data = tmp;
-        data[size - 1] = item;
+        data[data.length - 1] = item;
     }
 
     /**
@@ -82,16 +79,15 @@ public class Array<T> extends Collection<T> {
      */
     @Override
     public void delete(int index) {
-        if (index > size - 1) {
-            throw new IndexOutOfBoundsException("index " + index + " but size is " + size);
+        if (index > data.length - 1) {
+            throw new IndexOutOfBoundsException("index " + index + " but size is " + data.length);
         }
-        T[] tmp = (T[]) new Object[size - 1];
-        for (int i = 0; i < size - 1; i++) {
+        T[] tmp = (T[]) new Object[data.length - 1];
+        for (int i = 0; i < data.length - 1; i++) {
             if (i != index) {
                 tmp[i] = data[i];
             }
         }
-        size--;
         data = null;
         data = tmp;
     }
@@ -109,8 +105,8 @@ public class Array<T> extends Collection<T> {
      */
     @Override
     public T get(int index) {
-        if (index > size - 1) {
-            throw new IndexOutOfBoundsException("index " + index + " but size is " + size);
+        if (index > data.length - 1) {
+            throw new IndexOutOfBoundsException("index " + index + " but size is " + data.length);
         }
         return data[index];
     }
@@ -127,15 +123,15 @@ public class Array<T> extends Collection<T> {
      */
     @Override
     public void set(T item, int index) {
-        if (index > size - 1) {
-            throw new IndexOutOfBoundsException("index " + index + " but size is " + size);
+        if (index > data.length - 1) {
+            throw new IndexOutOfBoundsException("index " + index + " but size is " + data.length);
         }
         data[index] = item;
     }
 
     @Override
     public int size() {
-        return size;
+        return data.length;
     }
 
     @Override
@@ -146,7 +142,7 @@ public class Array<T> extends Collection<T> {
 
             @Override
             public boolean hasNext() {
-                return index < size;
+                return index < data.length;
             }
 
             @Override
