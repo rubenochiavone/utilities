@@ -1,5 +1,7 @@
 package cf.nebur.util;
 
+import java.util.Iterator;
+
 /**
  * A random-access, variable sized list data structure that allows
  * elements to be added or removed.
@@ -158,5 +160,27 @@ public class DynamicArray<T> extends Collection<T> {
     @Override
     public int size() {
         return logicalSize;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < logicalSize;
+            }
+
+            @Override
+            public T next() {
+                try {
+                    return data[index];
+                } finally {
+                    index++;
+                }
+            }
+        };
     }
 }

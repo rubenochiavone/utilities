@@ -1,5 +1,7 @@
 package cf.nebur.util;
 
+import java.util.Iterator;
+
 /**
  * A random-access data structure that is of fixed size.
  *
@@ -134,5 +136,27 @@ public class Array<T> extends Collection<T> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < size;
+            }
+
+            @Override
+            public T next() {
+                try {
+                    return data[index];
+                } finally {
+                    index++;
+                }
+            }
+        };
     }
 }

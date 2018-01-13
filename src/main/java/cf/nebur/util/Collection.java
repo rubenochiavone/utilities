@@ -1,12 +1,14 @@
 package cf.nebur.util;
 
+import java.util.Iterator;
+
 /**
  * Abstract collection class
  *
  * @param <T>
  * @author Ruben O. Chiavone
  */
-public abstract class Collection<T> {
+public abstract class Collection<T> implements Iterable<T> {
 
     /**
      * Adds {@code item} to this collection
