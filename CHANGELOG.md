@@ -7,5 +7,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-- Collection classes: array, dynamic array, singly linked list, double linked list, (...)
+- Collection classes: array, dynamic array, singly linked list, double linked list, hash table, (...)
 
