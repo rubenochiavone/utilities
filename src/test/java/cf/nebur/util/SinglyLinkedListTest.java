@@ -6,7 +6,7 @@ import org.junit.Test;
 public class SinglyLinkedListTest extends TestCase {
 
     @Test
-    public void testIntegerCtor() {
+    public void testIntegerSinglyLinkedListCtor() {
         SinglyLinkedList<Integer> integerSinglyLinkedList =
                 new SinglyLinkedList<>();
 
@@ -15,7 +15,7 @@ public class SinglyLinkedListTest extends TestCase {
     }
 
     @Test
-    public void testIntegerAppend() {
+    public void testIntegerSinglyLinkedListAppend() {
         SinglyLinkedList<Integer> integerSinglyLinkedList =
                 new SinglyLinkedList<>();
 
@@ -30,7 +30,7 @@ public class SinglyLinkedListTest extends TestCase {
     }
 
     @Test
-    public void testFloatDelete() {
+    public void testFloatSinglyLinkedListDelete() {
         SinglyLinkedList<Float> floatSinglyLinkedList =
                 new SinglyLinkedList<>();
 
@@ -52,5 +52,40 @@ public class SinglyLinkedListTest extends TestCase {
         floatSinglyLinkedList.delete(20.0f);
 
         assertEquals(0, floatSinglyLinkedList.size());
+    }
+
+    @Test
+    public void testEmptySinglyLinkedListIterator() {
+        SinglyLinkedList<Integer> integerSinglyLinkedList
+                = new SinglyLinkedList<>();
+
+        for (Integer i : integerSinglyLinkedList) {
+            fail("Should never reach here");
+        }
+    }
+
+    @Test
+    public void testStringSinglyLinkedListIterator() {
+        SinglyLinkedList<Integer> integerSinglyLinkedList
+                = new SinglyLinkedList<>();
+
+        String aVeryLongString = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+        String[] words = aVeryLongString.split(" ");
+        int length = words.length;
+
+        SinglyLinkedList<String> stringSinglyLinkedList =
+                new SinglyLinkedList<>();
+
+        int i;
+
+        for (i = 0; i < length; i++) {
+            stringSinglyLinkedList.append(words[i]);
+        }
+
+        i = 0;
+        for (String word : stringSinglyLinkedList) {
+            assertEquals(words[i], word);
+            i++;
+        }
     }
 }
