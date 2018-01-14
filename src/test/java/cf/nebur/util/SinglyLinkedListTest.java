@@ -52,6 +52,10 @@ public class SinglyLinkedListTest extends TestCase {
         floatSinglyLinkedList.delete(20.0f);
 
         assertEquals(0, floatSinglyLinkedList.size());
+
+        floatSinglyLinkedList.delete(20.0f);
+
+        assertEquals(0, floatSinglyLinkedList.size());
     }
 
     @Test
