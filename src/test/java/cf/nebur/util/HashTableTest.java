@@ -26,6 +26,34 @@ public class HashTableTest extends TestCase {
     }
 
     @Test
+    public void testBigStringIntegerPut() {
+        String aVeryLongString = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+        String[] words = aVeryLongString.split(" ");
+        int length = words.length;
+
+        HashTable<String, Integer> stringIntegerHashTable =
+                new HashTable<>();
+
+        int i;
+
+        for (i = 0; i < length; i++) {
+            String key = words[i];
+            int value = 0;
+
+            for (char c : key.toCharArray()) {
+                value += c;
+            }
+
+            stringIntegerHashTable.put(key, value);
+
+        }
+
+        System.out.println("size " + stringIntegerHashTable.size());
+
+        assertEquals(length, stringIntegerHashTable.size());
+    }
+
+    @Test
     public void testStringIntegerGet() {
         HashTable<String, Integer> stringIntegerHashTable =
                 new HashTable<>();
