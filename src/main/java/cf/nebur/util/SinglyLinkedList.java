@@ -91,6 +91,9 @@ public class SinglyLinkedList<T> extends LinkedList<T> {
      */
     @Override
     public void delete(T item) {
+        if (size == 0) {
+            return;
+        }
         Node node = head;
         Node previous = null;
         while (true) {
