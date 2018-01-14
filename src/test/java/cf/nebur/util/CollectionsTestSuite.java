@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
         ArrayTest.class,
         DynamicArrayTest.class,
         SinglyLinkedListTest.class,
-        DoubleLinkedListTest.class
+        DoubleLinkedListTest.class,
+        HashTableTest.class
 })
 @RunWith(Suite.class)
 public class CollectionsTestSuite {
