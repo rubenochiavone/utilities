@@ -1,7 +1,5 @@
 package cf.nebur.util;
 
-import java.util.Iterator;
-
 /**
  * Abstract collection class
  *
@@ -11,7 +9,7 @@ import java.util.Iterator;
 public abstract class Collection<T> implements Iterable<T> {
 
     /**
-     * Adds {@code item} to this collection
+     * Adds {@code item} to the end of this collection
      *
      * @param item
      */
@@ -29,7 +27,7 @@ public abstract class Collection<T> implements Iterable<T> {
     }
 
     /**
-     * Removes {@code item} to this collection
+     * Removes {@code item} from this collection
      *
      * @param item
      */
