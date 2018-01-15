@@ -92,7 +92,7 @@ public class HashTable<K, V> {
      * @return
      */
     private int hash(K key) {
-        return Math.abs(key.hashCode());
+        return java.lang.Math.abs(key.hashCode());
     }
 
     /**
