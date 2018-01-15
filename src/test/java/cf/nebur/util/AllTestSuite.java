@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses({
         DataStrucutreTestSuite.class,
-        MathTest.class
+        MathTest.class,
+        SortingAlgorithmTest.class
 })
 @RunWith(Suite.class)
 public class AllTestSuite {
