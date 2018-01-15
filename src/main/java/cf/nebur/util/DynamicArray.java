@@ -30,7 +30,7 @@ import java.util.Iterator;
  * @author Ruben O. Chiavone
  * @see https://codefights.com/interview-practice/topics/arrays/tutorial
  */
-public class DynamicArray<T> extends Collection<T> {
+public class DynamicArray<T> implements Iterable<T> {
 
     private static final int MINIMUM_EXTRA_SPACE = 5;
 
@@ -87,7 +87,6 @@ public class DynamicArray<T> extends Collection<T> {
      *
      * @param item
      */
-    @Override
     public void append(T item) {
         allocateAdditionalSpace(logicalSize + 1);
         data[logicalSize] = item;
@@ -104,7 +103,6 @@ public class DynamicArray<T> extends Collection<T> {
      *
      * @param index
      */
-    @Override
     public void delete(int index) {
         if (index > logicalSize - 1) {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + logicalSize);
@@ -131,7 +129,6 @@ public class DynamicArray<T> extends Collection<T> {
      * @param index
      * @return
      */
-    @Override
     public T get(int index) {
         if (index > logicalSize - 1) {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + logicalSize);
@@ -149,7 +146,6 @@ public class DynamicArray<T> extends Collection<T> {
      *
      * @param item
      */
-    @Override
     public void set(T item, int index) {
         if (index > logicalSize - 1) {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + logicalSize);
@@ -157,7 +153,6 @@ public class DynamicArray<T> extends Collection<T> {
         data[index] = item;
     }
 
-    @Override
     public int size() {
         return logicalSize;
     }

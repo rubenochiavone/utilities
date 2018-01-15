@@ -33,7 +33,7 @@ import java.util.Iterator;
  * @author Ruben O. Chiavone
  * @see https://codefights.com/interview-practice/topics/arrays/tutorial
  */
-public class Array<T> extends Collection<T> {
+public class Array<T> implements Iterable<T> {
 
     private T[] data;
 
@@ -58,7 +58,6 @@ public class Array<T> extends Collection<T> {
      *
      * @param item
      */
-    @Override
     public void append(T item) {
         T[] tmp = (T[]) new Object[data.length + 1];
         System.arraycopy(data, 0, tmp, 0, data.length);
@@ -77,7 +76,6 @@ public class Array<T> extends Collection<T> {
      *
      * @param index
      */
-    @Override
     public void delete(int index) {
         if (index > data.length - 1) {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + data.length);
@@ -103,7 +101,6 @@ public class Array<T> extends Collection<T> {
      * @param index
      * @return
      */
-    @Override
     public T get(int index) {
         if (index > data.length - 1) {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + data.length);
@@ -121,7 +118,6 @@ public class Array<T> extends Collection<T> {
      *
      * @param item
      */
-    @Override
     public void set(T item, int index) {
         if (index > data.length - 1) {
             throw new IndexOutOfBoundsException("index " + index + " but size is " + data.length);
@@ -129,7 +125,6 @@ public class Array<T> extends Collection<T> {
         data[index] = item;
     }
 
-    @Override
     public int size() {
         return data.length;
     }
