@@ -44,6 +44,7 @@ public class HashTable<K, V> {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 14;
     private static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     private class Entry<K, V> {
         K key;
@@ -114,24 +115,26 @@ public class HashTable<K, V> {
         return (float) size / buckets.length;
     }
 
+    /**
+     * Increases the capacity of and internally reorganizes this
+     * hash table, in order to accommodate and access its entries more
+     * efficiently.
+     */
     private void rehash() {
         Bucket<K, V>[] oldBuckets = buckets;
 
         Long newCapacity = new Long((buckets.length << 1) + 1);
         Bucket<K, V>[] newBuckets;
 
-        if (newCapacity > Integer.MAX_VALUE) {
-            newBuckets = new Bucket[Integer.MAX_VALUE];
+        if (newCapacity > MAX_ARRAY_SIZE) {
+            newBuckets = new Bucket[MAX_ARRAY_SIZE];
         } else {
             newBuckets = new Bucket[newCapacity.intValue()];
         }
 
         buckets = newBuckets;
 
-        int length = oldBuckets.length;
-
-        for (int i = 0; i < length; i++) {
-            Bucket<K, V> oldBucket = oldBuckets[i];
+        for (Bucket<K, V> oldBucket : oldBuckets) {
             if (oldBucket == null) {
                 continue;
             }
@@ -169,16 +172,71 @@ public class HashTable<K, V> {
         }
     }
 
+    /**
+     * Returns {@code true} if this hash table contains
+     * the specified key.
+     *
+     * @param key
+     * @return {@code true} if this hash table contains
+     * the specified and {@code false} otherwise
+     */
     public boolean containsKey(K key) {
         return get(key) != null;
     }
 
+    /**
+     * Returns {@code true} if this hash table has one or more
+     * keys to the specified value.
+     *
+     * @param value
+     * @return {@code true} if this hash table has one or more
+     * keys to the specified value and {@code false} otherwise
+     */
     public boolean containsValue(V value) {
-        // TODO:
+        for (Bucket<K, V> bucket : buckets) {
+            if (bucket == null) {
+                continue;
+            }
+
+            Entry<K, V> entry = bucket.entry;
+
+            while (entry != null) {
+                if (entry.value.equals(value)) {
+                    return true;
+                }
+
+                entry = entry.next;
+            }
+        }
+
         return false;
     }
 
+    /**
+     * Adds a new (key, value) pair to the hash table
+     *
+     * <ul>
+     *     <li>Time complexity: O(1) *</li>
+     *     <li>Mutates structure: Yes</li>
+     * </ul>
+     *
+     * <p>* This assumes that the none of the buckets has a
+     * large number of items in it. More accurately O(B),
+     * where B is the size of the bucket assigned to by
+     * the hash function.</p>
+     *
+     * @param key
+     * @param value
+     */
     public void put(K key, V value) {
+        if (key == null || value == null) {
+            throw new NullPointerException();
+        }
+
+        if (size == Integer.MAX_VALUE) {
+            throw new IllegalStateException("No more room");
+        }
+
         Entry<K, V> entry = new Entry<>();
         entry.key = key;
         entry.value = value;
@@ -208,13 +266,36 @@ public class HashTable<K, V> {
         size++;
         float actualLoadFactor = measureLoadFactor();
 
-        if (buckets.length != Integer.MAX_VALUE && actualLoadFactor > loadFactor) {
+        if (buckets.length != MAX_ARRAY_SIZE && actualLoadFactor > loadFactor) {
             // rehash whole table
             rehash();
         }
     }
 
+    /**
+     * Removes (key) from the hash table
+     *
+     * <ul>
+     *     <li>Time complexity: O(1) *</li>
+     *     <li>Mutates structure: Yes</li>
+     * </ul>
+     *
+     * <p>* This assumes that the none of the buckets has a
+     * large number of items in it. More accurately O(B),
+     * where B is the size of the bucket assigned to by
+     * the hash function.</p>
+     *
+     * @param key
+     */
     public boolean delete(K key) {
+        if (key == null) {
+            throw new NullPointerException();
+        }
+
+        if (size == 0) {
+            return false;
+        }
+
         int hash = hash(key);
         int index = index(hash);
 
@@ -241,6 +322,22 @@ public class HashTable<K, V> {
         return false;
     }
 
+    /**
+     * Lookup whether key is in hash table
+     *
+     * <ul>
+     *     <li>Time complexity: O(1) *</li>
+     *     <li>Mutates structure: No</li>
+     * </ul>
+     *
+     * <p>* This assumes that the none of the buckets has a
+     * large number of items in it. More accurately O(B),
+     * where B is the size of the bucket assigned to by
+     * the hash function.</p>
+     *
+     * @param key
+     * @return
+     */
     public V get(K key) {
         int hash = hash(key);
         int index = index(hash);
