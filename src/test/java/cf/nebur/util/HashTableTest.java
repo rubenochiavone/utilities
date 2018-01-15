@@ -3,6 +3,9 @@ package cf.nebur.util;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+/**
+ * @author Ruben O. Chiavone
+ */
 public class HashTableTest extends TestCase {
 
     @Test

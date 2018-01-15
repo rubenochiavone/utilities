@@ -5,6 +5,9 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
+/**
+ * @author Ruben O. Chiavone
+ */
 public class DoubleLinkedListTest extends TestCase {
 
     @Test

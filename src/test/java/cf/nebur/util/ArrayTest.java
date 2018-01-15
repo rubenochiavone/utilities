@@ -5,6 +5,9 @@ import org.junit.Test;
 
 import java.util.Random;
 
+/**
+ * @author Ruben O. Chiavone
+ */
 public class ArrayTest extends TestCase {
 
     @Test
