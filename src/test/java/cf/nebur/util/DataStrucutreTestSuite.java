@@ -11,5 +11,5 @@ import org.junit.runners.Suite;
         HashTableTest.class
 })
 @RunWith(Suite.class)
-public class CollectionsTestSuite {
+public class DataStrucutreTestSuite {
 }
