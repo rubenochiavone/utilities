@@ -48,8 +48,6 @@ public class HashTableTest extends TestCase {
 
         }
 
-        System.out.println("size " + stringIntegerHashTable.size());
-
         assertEquals(length, stringIntegerHashTable.size());
     }
 
@@ -111,5 +109,79 @@ public class HashTableTest extends TestCase {
         stringIntegerHashTable.delete("Simon Smith");
 
         assertEquals(3, stringIntegerHashTable.size());
+    }
+
+    @Test
+    public void testStringStringContains() {
+        HashTable<String, String> stringStringHashTable =
+                new HashTable<>();
+        stringStringHashTable.put("Google", "United States");
+        stringStringHashTable.put("Nokia", "Finland");
+        stringStringHashTable.put("Sony", "Japan");
+
+        // contains key
+        assertTrue(stringStringHashTable.containsKey("Google"));
+        assertTrue(stringStringHashTable.containsKey("Nokia"));
+        assertFalse(stringStringHashTable.containsKey("Apple"));
+
+        // contains value
+        assertTrue(stringStringHashTable.containsValue("Japan"));
+        assertTrue(stringStringHashTable.containsValue("Finland"));
+        assertFalse(stringStringHashTable.containsValue("Brazil"));
+    }
+
+    @Test
+    public void testStringStringPutNull() {
+        HashTable<String, String> stringStringHashTable =
+                new HashTable<>();
+        stringStringHashTable.put("Google", "United States");
+        stringStringHashTable.put("Nokia", "Finland");
+        stringStringHashTable.put("Sony", "Japan");
+
+        try {
+            stringStringHashTable.put("Apple", null);
+            fail("Should never reach here");
+        } catch (NullPointerException e) {
+            assertNotNull(e);
+        }
+
+        try {
+            stringStringHashTable.put(null, "Brazil");
+            fail("Should never reach here");
+        } catch (NullPointerException e) {
+            assertNotNull(e);
+        }
+
+        try {
+            stringStringHashTable.put(null, null);
+            fail("Should never reach here");
+        } catch (NullPointerException e) {
+            assertNotNull(e);
+        }
+    }
+
+    @Test
+    public void testStringStringDeleteNull() {
+        HashTable<String, String> stringStringHashTable =
+                new HashTable<>();
+        stringStringHashTable.put("Google", "United States");
+        stringStringHashTable.put("Nokia", "Finland");
+        stringStringHashTable.put("Sony", "Japan");
+
+        try {
+            stringStringHashTable.delete(null);
+            fail("Should never reach here");
+        } catch (NullPointerException e) {
+            assertNotNull(e);
+        }
+    }
+
+    @Test
+    public void testStringStringDeleteEmpty() {
+        HashTable<String, String> stringStringHashTable =
+                new HashTable<>();
+
+        assertFalse(stringStringHashTable.delete("Google"));
+        assertFalse(stringStringHashTable.delete("Facebook"));
     }
 }
