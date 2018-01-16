@@ -1,9 +1,20 @@
 package cf.nebur.util;
 
+/**
+ * Handful of useful mathematical methods
+ *
+ * @author Ruben O. Chiavone
+ */
 public class Math {
 
     private Math() {}
 
+    /**
+     * Factorial method
+     *
+     * @param n
+     * @return
+     */
     public static int factorial(int n) {
         if (n <= 0) {
             return 0;
@@ -13,6 +24,12 @@ public class Math {
         return n * factorial(n - 1);
     }
 
+    /**
+     * Fibonacci series method
+     *
+     * @param n
+     * @return
+     */
     public static int fibonacci(int n) {
         if (n <= 0) {
             return 0;
@@ -21,4 +38,6 @@ public class Math {
         }
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
+
+    // TODO: add permutation and combination methods
 }
