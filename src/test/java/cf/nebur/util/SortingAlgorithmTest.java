@@ -39,6 +39,24 @@ public class SortingAlgorithmTest extends TestCase {
             assertEquals(i, sortedArray[8 - i].intValue());
         }
 
+        integerSortable =
+                SortableFactory.create(Integer.class, SortingAlgorithm.MERGE_SORT);
+
+        assertNotNull(integerSortable);
+
+        array = new Integer[5];
+        array[0] = 2;
+        array[1] = 3;
+        array[2] = 1;
+        array[3] = 4;
+        array[4] = 5;
+
+        sortedArray = integerSortable.sort(array);
+
+        for (int i = 1; i <= 5; i++) {
+            assertEquals(i, sortedArray[i - 1].intValue());
+        }
+
         // TODO: improve testing
     }
 
