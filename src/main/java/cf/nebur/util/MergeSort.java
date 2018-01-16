@@ -12,8 +12,21 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
         ASC, DESC
     }
 
+    private interface DirectionComparable<T> {
+        /**
+         * Returns {@code true} if the comparison succeed
+         * based on its direction and {@code false} otherwise
+         *
+         * @param left
+         * @param right
+         * @return {@code true} if the comparison succeed
+         * based on its direction and {@code false} otherwise
+         */
+        boolean compare(T left, T right);
+    }
+
     private Class<T> clazz;
-    private Direction direction;
+    private DirectionComparable<T> directionComparable;
 
     MergeSort(Class<T> clazz) {
         this(clazz, Direction.ASC);
@@ -21,7 +34,24 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
 
     MergeSort(Class<T> clazz, Direction direction) {
         this.clazz = clazz;
-        this.direction = direction;
+        switch (direction) {
+            case ASC:
+                directionComparable = new DirectionComparable<T>() {
+                    @Override
+                    public boolean compare(T left, T right) {
+                        return left.compareTo(right) <= 0;
+                    }
+                };
+                break;
+            case DESC:
+                directionComparable = new DirectionComparable<T>() {
+                    @Override
+                    public boolean compare(T left, T right) {
+                        return left.compareTo(right) > 0;
+                    }
+                };
+                break;
+        }
     }
 
     private T[] merge(T[] left, T[] right) {
@@ -33,10 +63,7 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
         int j = 0;
         int k = 0;
         while (i < leftLength && j < rightLength) {
-            if (
-                    (direction == Direction.ASC && left[i].compareTo(right[j]) <= 0) || // asc
-                    (direction == Direction.DESC && left[i].compareTo(right[j]) > 0)    // desc
-                    ) {
+            if (directionComparable.compare(left[i], right[j])) {
                 res[k] = left[i];
                 i++;
                 k++;
@@ -66,10 +93,13 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
         if (array == null || array.length == 0) {
             return null;
         } else if (array.length == 1) {
+            // base case
             return array;
         }
 
         int n = array.length;
+
+        // divide
         int nFirstHalf, nSecondHalf;
 
         if (n % 2 == 0) {
@@ -79,7 +109,6 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
         }
         nSecondHalf = n / 2;
 
-
         T[] firstHalf = (T[]) java.lang.reflect.Array.newInstance(clazz, nFirstHalf);
         T[] secondHalf = (T[]) java.lang.reflect.Array.newInstance(clazz, nSecondHalf);
 
@@ -87,9 +116,11 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
         System.arraycopy(array, 0, firstHalf, 0, nFirstHalf);
         System.arraycopy(array, nFirstHalf, secondHalf, 0, nSecondHalf);
 
+        // conquer
         firstHalf = sort(firstHalf);
         secondHalf = sort(secondHalf);
 
+        // merge
         return merge(firstHalf, secondHalf);
     }
 }
