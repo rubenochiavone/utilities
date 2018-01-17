@@ -5,38 +5,35 @@ package cf.nebur.util;
  *
  * @param <T>
  * @author Ruben O. Chiavone
+ * @see https://brilliant.org/wiki/merge
  */
 class MergeSort<T extends Number & Comparable> implements Sortable<T> {
 
-    enum Direction {
-        ASC, DESC
-    }
-
-    private interface DirectionComparable<T> {
+    private interface OrderBasedComparable<T> {
         /**
          * Returns {@code true} if the comparison succeed
-         * based on its direction and {@code false} otherwise
+         * based on its order and {@code false} otherwise
          *
          * @param left
          * @param right
          * @return {@code true} if the comparison succeed
-         * based on its direction and {@code false} otherwise
+         * based on its order and {@code false} otherwise
          */
         boolean compare(T left, T right);
     }
 
     private Class<T> clazz;
-    private DirectionComparable<T> directionComparable;
+    private OrderBasedComparable<T> orderBasedComparable;
 
     MergeSort(Class<T> clazz) {
-        this(clazz, Direction.ASC);
+        this(clazz, SortingAlgorithm.Order.ASC);
     }
 
-    MergeSort(Class<T> clazz, Direction direction) {
+    MergeSort(Class<T> clazz, SortingAlgorithm.Order order) {
         this.clazz = clazz;
-        switch (direction) {
+        switch (order) {
             case ASC:
-                directionComparable = new DirectionComparable<T>() {
+                orderBasedComparable = new OrderBasedComparable<T>() {
                     @Override
                     public boolean compare(T left, T right) {
                         return left.compareTo(right) <= 0;
@@ -44,7 +41,7 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
                 };
                 break;
             case DESC:
-                directionComparable = new DirectionComparable<T>() {
+                orderBasedComparable = new OrderBasedComparable<T>() {
                     @Override
                     public boolean compare(T left, T right) {
                         return left.compareTo(right) > 0;
@@ -63,7 +60,7 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
         int j = 0;
         int k = 0;
         while (i < leftLength && j < rightLength) {
-            if (directionComparable.compare(left[i], right[j])) {
+            if (orderBasedComparable.compare(left[i], right[j])) {
                 res[k] = left[i];
                 i++;
                 k++;
@@ -86,7 +83,6 @@ class MergeSort<T extends Number & Comparable> implements Sortable<T> {
 
         return res;
     }
-
 
     @Override
     public T[] sort(T[] array) {
