@@ -6,5 +6,12 @@ package cf.nebur.util;
  */
 public interface Sortable<T extends Number & Comparable> {
 
+    /**
+     * Sort {@code array}
+     *
+     * @param array
+     *      {@code array} to be sorted
+     * @return sorted {@code array}
+     */
     T[] sort(T[] array);
 }
