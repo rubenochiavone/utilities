@@ -7,6 +7,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-- Data structures classes: array, dynamic array, singly linked list, double linked list, hash table
+- Data structures classes: array, dynamic array, singly linked list, double linked list, hash table, binary search tree
 - Sorting algorithms: bubble sort, insertion sort, merge sort
 - Mathematical methods: factorial, fibonacci

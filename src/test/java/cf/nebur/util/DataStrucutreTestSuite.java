@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
         DynamicArrayTest.class,
         SinglyLinkedListTest.class,
         DoubleLinkedListTest.class,
-        HashTableTest.class
+        HashTableTest.class,
+        BinarySearchTreeTest.class
 })
 @RunWith(Suite.class)
 public class DataStrucutreTestSuite {
