@@ -115,7 +115,8 @@ public interface Tree<T extends Comparable> extends Iterable<T> {
     /**
      * Returns an array containing the nodes in sorted order
      *
+     * @param clazz
      * @return an array containing the nodes in sorted order
      */
-    T[] flatten();
+    T[] flatten(Class<T> clazz);
 }

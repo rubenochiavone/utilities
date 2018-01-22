@@ -259,9 +259,17 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
      * @return an array containing the nodes in sorted order
      */
     @Override
-    public T[] flatten() {
-        // TODO: flatten()
-        return (T[]) new Object[0];
+    public T[] flatten(Class<T> clazz) {
+        LinkedList<T> list = new SinglyLinkedList<>();
+        for (T object : this) {
+            list.append(object);
+        }
+        T[] array = (T[]) java.lang.reflect.Array.newInstance(clazz, list.size());
+        int length = array.length;
+        for (int i = 0; i < length; i++) {
+            array[i] = list.get(i);
+        }
+        return array;
     }
 
     @Override

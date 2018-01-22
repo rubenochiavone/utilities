@@ -215,12 +215,12 @@ public abstract class TreeTest extends TestCase {
 
     @Test
     public void testIntegerGenericGet() {
-        fail("TODO: test tree.get() method");
+        fail("TODO: test tree.get(n) method");
     }
 
     @Test
     public void testIntegerGenericRand() {
-        fail("TODO: test tree.rand(n) method");
+        fail("TODO: test tree.rand(object) method");
     }
 
     @Test
@@ -304,7 +304,7 @@ public abstract class TreeTest extends TestCase {
                 .insert(3)
                 .insert(4);
 
-        Integer[] array = tree.flatten();
+        Integer[] array = tree.flatten(Integer.class);
 
         assertEquals(4, array.length);
 
