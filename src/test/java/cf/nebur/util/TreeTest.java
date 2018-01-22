@@ -225,8 +225,10 @@ public abstract class TreeTest extends TestCase {
 
     @Test
     public void testIntegerGenericHeight() {
-        // insert node 1
         Tree<Integer> tree = createTree();
+
+        assertEquals(0, tree.height());
+
         tree.insert(2)
                 .insert(1)
                 .insert(3)
@@ -238,6 +240,60 @@ public abstract class TreeTest extends TestCase {
         assertTrue(tree.search(4));
 
         assertEquals(3, tree.height());
+
+        //
+        tree = createTree();
+
+        assertEquals(0, tree.height());
+
+        tree.insert(2);
+
+        assertEquals(1, tree.height());
+
+        tree.insert(1);
+
+        assertEquals(2, tree.height());
+
+        tree.insert(3);
+
+        assertEquals(2, tree.height());
+
+        tree.insert(4);
+
+        assertEquals(3, tree.height());
+
+        tree.delete(4);
+
+        assertEquals(2, tree.height());
+
+        tree.delete(3);
+
+        assertEquals(2, tree.height());
+
+        tree.delete(1);
+
+        assertEquals(1, tree.height());
+
+        tree.delete(2);
+
+        assertEquals(0, tree.height());
+
+        //
+        tree = createTree();
+
+        assertEquals(0, tree.height());
+
+        tree.insert(5)
+                .insert(2)
+                .insert(12)
+                .insert(-4)
+                .insert(3)
+                .insert(9)
+                .insert(21)
+                .insert(19)
+                .insert(25);
+
+        assertEquals(4, tree.height());
     }
 
     @Test
@@ -252,7 +308,7 @@ public abstract class TreeTest extends TestCase {
 
         assertEquals(4, array.length);
 
-        // TODO: check that array contains each node
+        fail("TODO: check that array contains each node");
     }
 
     @Test
@@ -266,5 +322,7 @@ public abstract class TreeTest extends TestCase {
         for (Integer i : tree) {
             assertNotNull(i);
         }
+
+        fail("TODO: check that iterator contains each value");
     }
 }
