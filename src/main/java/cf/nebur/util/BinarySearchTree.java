@@ -1,7 +1,5 @@
 package cf.nebur.util;
 
-import java.util.Iterator;
-
 /**
  * Binary Search Tree (BST)
  * @param <T>
@@ -13,15 +11,22 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
         T value;
         Node<T> left;
         Node<T> right;
-
-        @Override
-        public String toString() {
-            return value.toString();
-        }
     }
 
     private Node<T> root;
 
+    /**
+     * Adds {@code object} into this tree,
+     * while maintaining a balanced tree.
+     *
+     * <ul>
+     *     <li>Time complexity: O(logn)</li>
+     *     <li>Mutates structure: Yes</li>
+     * </ul>
+     *
+     * @param object
+     * @return mutated tree
+     */
     @Override
     public Tree<T> insert(T object) {
         if (object == null) {
@@ -63,6 +68,18 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
         return parent;
     }
 
+    /**
+     * Finds and deletes {@code object} from this tree,
+     * while maintaining a balanced tree.
+     *
+     * <ul>
+     *     <li>Time complexity: O(logn)</li>
+     *     <li>Mutates structure: Yes</li>
+     * </ul>
+     *
+     * @param object
+     * @return mutated tree
+     */
     @Override
     public Tree<T> delete(T object) {
         if (object == null) {
@@ -131,6 +148,18 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
         return current;
     }
 
+    /**
+     * Determines if {@code object} is in tree
+     *
+     * <ul>
+     *     <li>Time complexity: O(logn)</li>
+     *     <li>Mutates structure: No</li>
+     * </ul>
+     *
+     * @param object
+     * @return {@code true} if {@code object} is in tree
+     *      and {@code false} otherwise
+     */
     @Override
     public boolean search(T object) {
         if (object == null) {
@@ -169,19 +198,48 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
         return node;
     }
 
+    /**
+     * Selects the {@code n}th highest object
+     *
+     * <ul>
+     *     <li>Time complexity: O(logn)</li>
+     *     <li>Mutates structure: No</li>
+     * </ul>
+     *
+     * @param n
+     * @return the {@code n}th highest object
+     *      or {@code null} if there is no such
+     *      object
+     */
     @Override
     public T get(int n) {
         // TODO: get(n)
         return null;
     }
 
+    /**
+     * Returns the number of nodes in this three
+     * that are less than or {@code object}. {@code object}
+     * does not have to appear in the tree.
+     *
+     * <ul>
+     *     <li>Time complexity: O(logn)</li>
+     *     <li>Mutates structure: No</li>
+     * </ul>
+     *
+     * @param object
+     *      random object
+     * @return the number of nodes in this three
+     * that are less than or {@code object}. {@code object}
+     * does not have to appear in the tree.
+     */
     @Override
     public int rand(T object) {
         if (object == null) {
             throw new NullPointerException();
         }
         // TODO: rand(object)
-        return 0;
+        return -1;
     }
 
     @Override
@@ -190,6 +248,16 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
         return -1;
     }
 
+    /**
+     * Returns an array containing the nodes in sorted order
+     *
+     * <ul>
+     *     <li>Time complexity: O(logn)</li>
+     *     <li>Mutates structure: No</li>
+     * </ul>
+     *
+     * @return an array containing the nodes in sorted order
+     */
     @Override
     public T[] flatten() {
         // TODO: flatten()
@@ -197,8 +265,55 @@ public class BinarySearchTree<T extends Comparable> implements Tree<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
-        // TODO: iterator()
-        return null;
+    public java.util.Iterator<T> iterator() {
+        return new Iterator();
+    }
+
+    private class Iterator implements java.util.Iterator<T> {
+
+        /**
+         * maps a tree node and whether it was checked or not
+         */
+        private HashTable<Node<T>, Boolean> checked = new HashTable<>();
+        /**
+         * maps a tree node to its parent
+         */
+        private HashTable<Node<T>, Node<T>> parents = new HashTable<>();
+        private Node<T> node = root;
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public T next() {
+            try {
+                return node.value;
+            } finally {
+                nextNode();
+            }
+        }
+
+        private void nextNode() {
+            // move to next node
+            if (node.left != null && (!checked.containsKey(node.left) || !checked.get(node.left))) {
+                parents.put(node.left, node);
+                node = node.left;
+            } else if (node.right != null && (!checked.containsKey(node.right) || !checked.get(node.right))) {
+                parents.put(node.right, node);
+                node = node.right;
+            } else {
+                // mark as checked
+                checked.put(node, true);
+
+                // return to parent to check other nodes
+                node = parents.get(node);
+
+                if (node != null) {
+                    nextNode();
+                }
+            }
+        }
     }
 }
